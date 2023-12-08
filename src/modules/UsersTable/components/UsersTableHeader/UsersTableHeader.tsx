@@ -2,8 +2,10 @@ import classNames from 'classnames';
 
 import { IFiltersState, SortDirections } from '../../types/usersTableFilters.types';
 import { IsActiveOptions } from '../../constants';
+import { Button } from '@/shared/components/Button';
 
 import s from './UsersTableHeader.module.scss';
+import React from 'react';
 
 interface IUsersTableHeaderProps {
   handleChangeFilter: <T extends keyof IFiltersState>(field: T, value: IFiltersState[T]) => void;
@@ -11,6 +13,7 @@ interface IUsersTableHeaderProps {
   activeSortName?: keyof IFiltersState;
   activeSortDirection?: SortDirections;
   filters: IFiltersState;
+  handleResetFilters: VoidFunction;
 }
 
 export const UsersTableHeader = ({
@@ -19,11 +22,14 @@ export const UsersTableHeader = ({
   activeSortName,
   activeSortDirection,
   filters,
+  handleResetFilters,
 }: IUsersTableHeaderProps) => {
   return (
     <thead className={s.thead}>
       <tr>
-        <th className={s.headCell}></th>
+        <th className={s.headCell}>
+          <Button onClick={handleResetFilters}>Reset Filters</Button>
+        </th>
         <UsersTableHeaderCell
           handleChangeFilter={handleChangeFilter}
           handleChangeSort={handleChangeSort}
@@ -75,49 +81,49 @@ interface IUsersTableHeaderCellProps {
   options?: { value: string; name: string }[];
 }
 
-export const UsersTableHeaderCell = ({
-  handleChangeFilter,
-  handleChangeSort,
-  activeSortDirection,
-  activeSortName,
-  name,
-  valueType = 'string',
-  value,
-  options,
-}: IUsersTableHeaderCellProps) => {
-  const isAscSort = activeSortDirection === SortDirections.ASC;
-  const isActive = activeSortName === name;
+export const UsersTableHeaderCell = React.memo(
+  ({
+    handleChangeFilter,
+    handleChangeSort,
+    activeSortDirection,
+    activeSortName,
+    name,
+    valueType = 'string',
+    value,
+    options,
+  }: IUsersTableHeaderCellProps) => {
+    const isAscSort = activeSortDirection === SortDirections.ASC;
+    const isActive = activeSortName === name;
 
-  const renderField = () => {
-    return valueType === 'select' ? (
-      <select onChange={(e) => handleChangeFilter(name, e.target.value)} value={value}>
-        {options?.map((op) => (
-          <option value={op.value} key={op.name}>
-            {op.name}
-          </option>
-        ))}
-      </select>
-    ) : valueType === 'number' ? (
-      <input
-        type="number"
-        placeholder={name}
-        onChange={(e) => handleChangeFilter(name, e.target.value)}
-        value={value}
-      />
-    ) : (
-      <input type="text" placeholder={name} onChange={(e) => handleChangeFilter(name, e.target.value)} value={value} />
+    const renderField = () => {
+      return valueType === 'select' ? (
+        <select onChange={(e) => handleChangeFilter(name, e.target.value)} value={value}>
+          {options?.map((op) => (
+            <option value={op.value} key={op.name}>
+              {op.name}
+            </option>
+          ))}
+        </select>
+      ) : (
+        <input
+          type="text"
+          placeholder={name}
+          onChange={(e) => handleChangeFilter(name, e.target.value)}
+          value={value}
+        />
+      );
+    };
+
+    return (
+      <th className={s.headCell}>
+        <div className={s.cellName}>{name}</div>
+        <span className={s.cellContent}>
+          {renderField()}
+          <button className={classNames(s.sort, { [s.active]: isActive })} onClick={() => handleChangeSort(name)}>
+            {isActive && isAscSort ? <>&#9660;</> : <>&#9650;</>}
+          </button>
+        </span>
+      </th>
     );
-  };
-
-  return (
-    <th className={s.headCell}>
-      <div className={s.cellName}>{name}</div>
-      <span className={s.cellContent}>
-        {renderField()}
-        <button className={classNames(s.sort, { [s.active]: isActive })} onClick={() => handleChangeSort(name)}>
-          {isActive && isAscSort ? <>&#9660;</> : <>&#9650;</>}
-        </button>
-      </span>
-    </th>
-  );
-};
+  },
+);

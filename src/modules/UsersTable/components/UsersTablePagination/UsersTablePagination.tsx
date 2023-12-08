@@ -1,5 +1,5 @@
 import classNames from 'classnames';
-
+import { Button } from '@/shared/components/Button';
 import s from './UsersTablePagination.module.scss';
 
 interface IUsersTablePaginationProps {
@@ -13,13 +13,13 @@ export const UsersTablePagination = ({ pages, activePage, onChangePage }: IUsers
     <div className={s.pagination}>
       {pages.map((page, idx) => {
         return page !== null ? (
-          <button
+          <Button
             className={classNames(s.pageBtn, { [s.active]: activePage === page + 1 })}
             key={idx}
             onClick={onChangePage(page + 1)}
           >
             {page + 1}
-          </button>
+          </Button>
         ) : (
           <span key={idx}>...</span>
         );

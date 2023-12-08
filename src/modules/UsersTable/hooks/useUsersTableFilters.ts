@@ -1,7 +1,7 @@
 import { useState, useMemo, useCallback } from 'react';
 
 import { useCustomSearchParams, usePagination, useSkipMountEffect } from '@/shared/hooks';
-import { debounce } from '@/shared/utils';
+import { debounce, removeFalsyValues } from '@/shared/utils';
 import { IFiltersState, ISortState, SortDirections } from '../types/usersTableFilters.types';
 import { IUser } from '@/models/user.model';
 
@@ -117,7 +117,9 @@ export const useUsersTableFilters = () => {
 
   const debouncedFilters = useCallback(
     debounce((params: Record<string, string>) => {
-      setParams(params);
+      const formattedParams = removeFalsyValues(params);
+
+      setParams(formattedParams);
     }, 400),
     [],
   );
@@ -125,6 +127,11 @@ export const useUsersTableFilters = () => {
   useSkipMountEffect(() => {
     debouncedFilters({ ...params, ...filters, page: 1 });
   }, [filters]);
+
+  const handleResetFilters = useCallback(() => {
+    setParams({});
+    setFilter({ balance: '', email: '', isActive: '', name: '' });
+  }, [setParams]);
 
   return {
     onChangePage,
@@ -137,5 +144,6 @@ export const useUsersTableFilters = () => {
     filters,
     filteredAndSortedData,
     elementsToShow,
+    handleResetFilters,
   };
 };

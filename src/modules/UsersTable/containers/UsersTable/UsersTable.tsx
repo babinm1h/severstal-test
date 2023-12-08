@@ -16,6 +16,7 @@ export const UsersTable = () => {
     handleChangeSort,
     onChangePage,
     pages,
+    handleResetFilters,
   } = useUsersTableFilters();
 
   return (
@@ -28,6 +29,7 @@ export const UsersTable = () => {
           activeSortDirection={activeSort?.direction}
           activeSortName={activeSort?.sort}
           filters={filters}
+          handleResetFilters={handleResetFilters}
         />
         <UsersTableBody tableData={filteredAndSortedData} elementsToShow={elementsToShow} />
       </table>
