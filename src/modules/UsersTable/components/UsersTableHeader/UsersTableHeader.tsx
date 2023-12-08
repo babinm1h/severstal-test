@@ -1,10 +1,9 @@
-import React from 'react';
 import classNames from 'classnames';
 
 import { IFiltersState, SortDirections } from '../../types/usersTableFilters.types';
+import { IsActiveOptions } from '../../constants';
 
 import s from './UsersTableHeader.module.scss';
-import { IsActiveOptions } from '../../constants';
 
 interface IUsersTableHeaderProps {
   handleChangeFilter: <T extends keyof IFiltersState>(field: T, value: IFiltersState[T]) => void;

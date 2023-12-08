@@ -28,5 +28,7 @@
       "@shared/*": ["src/shared/*"],
       "@models/*": ["src/models/*"]
     }
-  }
+  },
+  "include": ["src", "./declaration.d.ts", "./src/**/*", "./*.ts"],
+  "references": [{ "path": "./tsconfig.node.json" }]
 }
