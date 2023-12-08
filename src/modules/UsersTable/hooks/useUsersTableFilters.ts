@@ -125,7 +125,7 @@ export const useUsersTableFilters = () => {
   );
 
   useSkipMountEffect(() => {
-    debouncedFilters({ ...params, ...filters, page: 1 });
+    debouncedFilters({ ...params, ...filters, page: '' });
   }, [filters]);
 
   const handleResetFilters = useCallback(() => {
