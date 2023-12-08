@@ -28,7 +28,9 @@ export const UsersTableHeader = ({
     <thead className={s.thead}>
       <tr>
         <th className={s.headCell}>
-          <Button onClick={handleResetFilters}>Reset Filters</Button>
+          <Button className={s.reset} onClick={handleResetFilters}>
+            Reset Filters
+          </Button>
         </th>
         <UsersTableHeaderCell
           handleChangeFilter={handleChangeFilter}

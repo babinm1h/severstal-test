@@ -21,6 +21,12 @@
     text-transform: capitalize;
   }
 
+  .reset {
+    background-color: rgb(250, 26, 26);
+    color: #fff;
+    font-weight: 600;
+  }
+
   input,
   select {
     border: 1px solid #ccc;
