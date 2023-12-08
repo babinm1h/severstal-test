@@ -1,0 +1,29 @@
+.thead {
+  border: 1px solid #ccc;
+  text-align: center;
+  .headCell {
+    border: 1px solid #ccc;
+    padding: 10px;
+    .cellContent {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+    }
+    .sort {
+      font-size: 16px;
+      &.active {
+        color: green;
+      }
+    }
+  }
+  .cellName {
+    margin-bottom: 5px;
+    text-transform: capitalize;
+  }
+
+  input,
+  select {
+    border: 1px solid #ccc;
+    padding: 4px 10px;
+  }
+}

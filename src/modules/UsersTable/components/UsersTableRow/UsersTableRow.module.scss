@@ -1,0 +1,29 @@
+.cell {
+  border: 1px solid #ccc;
+  padding: 10px;
+  &.cell1 {
+    padding-left: 30px;
+  }
+  &.cell2 {
+    padding-left: 40px;
+  }
+  &.cell3 {
+    padding-left: 50px;
+  }
+  &.cell4 {
+    padding-left: 55px;
+  }
+  &.cell5 {
+    padding-left: 60px;
+  }
+  &.hasChilds {
+    background-color: #e7e7e7;
+    cursor: pointer;
+  }
+
+  .showBtn {
+    background-color: #fff;
+    border-radius: 12px;
+    padding: 6px;
+  }
+}
